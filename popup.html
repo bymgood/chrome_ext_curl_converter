@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+	  .body {
+		margin: 0;
+	  }
+	  
+	  textarea {
+		width: 100%;
+		height: 300px;
+	  }
+	  
+	  .column {
+		float: left;
+		width: 46%;
+		padding: 10px;
+	  }
+	  
+	  .column_btn {
+		float: left;
+		vertical-align: middle;
+		line-height: 320px;
+	  }
+
+	  /* Clear floats after the columns */
+	  .row:after {
+	    content: "";
+		display: table;
+		clear: both;		
+		width: 800px;
+	  }
+    </style>
+	<link href="common.min.css" rel="stylesheet">
+  </head>
+  <body>
+	<div class="row">
+		<div class="column">
+			<textarea id="from-txt"></textarea>
+		</div>		
+		<div class="column_btn">
+			<button id="curl-command-parsing" class="btn btn-primary">&nbsp;&nbsp;→&nbsp;&nbsp;</button>
+		</div>
+		<div class="column">
+			<textarea id="to-txt"></textarea>
+		</div>
+	</div>
+	<div id="usage-tip" style="display: block;">
+		Tip: 로그에서 "############  REQUEST URL  ############" ~ "############  REQUEST BODY  ############" 값 까지 복붙한 후 "→" 버튼을 누르세요.
+	</div>
+	<div class="footer">
+      © <span id="year">2019</span> 클라이언트기술개발팀 - ym.baek
+    </div>
+	<script src="jquery-3.4.1.min.js"></script>
+    <script src="popup.js"></script>
+  </body>
+</html>
