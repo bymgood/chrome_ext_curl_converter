@@ -59,10 +59,11 @@ commandParsing.onclick = function(element) {
 	let curl = "";
 	curl += "curl -v --connect-timeout 5 --max-time 10 \\\n";
 	curl += parseHeader(header);
-	curl += "'" + url + "'";
 	if (body != null && body != "") {
-		curl += " \\\n"
-		curl += "-d '" + body + "'";
+		curl += "-d '" + body + "' \\\n";
+		curl += "-X GET " + url + "\n";
+	} else {
+		curl += url + "\n";
 	}
 	
 	toTxt.val(curl);
