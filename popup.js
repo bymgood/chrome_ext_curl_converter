@@ -34,6 +34,10 @@ commandParsing.onclick = function(element) {
 	let toTxt = $("#to-txt");
 	toTxt.val("");
 	
+	if (fromTxt.val() == "") {
+		return;
+	}
+	
 	let rows = $("#from-txt").val().split("\n")
 	let headerBegin = false;
 	let url = "";
