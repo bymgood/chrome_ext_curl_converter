@@ -4,7 +4,6 @@
 
 'use strict';
 
-let commandParsing = document.getElementById('curl-command-parsing');
 const TAG_CLIENT = "ONESTORE_CLIENT:";
 const TAG_SERVICE = "ONESTORE_SERVICE:";
 const HEADER = "#  REQUEST HEADER  #";
@@ -29,46 +28,84 @@ function parseHeader(header) {
 	return result;
 }
 
-commandParsing.onclick = function(element) {
-	let fromTxt = $("#from-txt");
-	let toTxt = $("#to-txt");
-	toTxt.val("");
-	
-	if (fromTxt.val() == "") {
-		return;
-	}
-	
-	let rows = $("#from-txt").val().split("\n")
-	let headerBegin = false;
-	let url = "";
-	let header = "";
-	let body = "";
-	$.each(rows, function(index, value) {
-		if (value.indexOf(TAG_CLIENT) == -1 && value.indexOf(TAG_SERVICE) == -1) {
-			return;
-		}
-			
-		if (value.indexOf(HEADER) > -1) {
-			url = getValue(rows[index-1]);
-			headerBegin = true;
-		} else if (value.indexOf(BODY) > -1) {
-			headerBegin = false;
-			body += getValue(rows[index+1]);
-			return false;
-		} else if (headerBegin) {
-			header += getValue(value);
-		}
-	});
-	
+function generateCurlCommand(header, body, url, toTxt, chkPost) {
 	let curl = "";
 	curl += "curl -v --connect-timeout 5 --max-time 10 \\\n";
 	curl += parseHeader(header);
 	if (body != null && body != "") {
 		curl += "-d '" + body + "' \\\n";
-		curl += "-X GET " + url + "\n";
+		if (chkPost) {
+			curl += url + "\n";
+		} else {
+			curl += "-X GET " + url + "\n";
+		}
 	} else {
 		curl += url + "\n";
 	}
 	
 	toTxt.val(curl);
-};
+	
+	console.log("CURL command has been generated.");
+}
+
+function copyToClipboard(toTxt) {
+	var $temp = $("<textarea>");
+	$("body").append($temp);	
+	$temp.val(toTxt.val()).select();
+	document.execCommand("copy");
+	$temp.remove();
+	
+	console.log("CURL command has been copied to clipboard.");
+}
+
+function showInfoPopup() {
+	if ($(".popuptext").is(":visible") == false) {
+		$(".popuptext").fadeIn().delay(1500).fadeOut();
+	}
+}
+
+$(function () {
+	$("#chk-post").change(function() {
+		$("#curl-command-parsing").trigger("click");
+	});	
+	
+	$("#curl-command-parsing").click(function() {
+		let fromTxt = $("#from-txt");
+		let toTxt = $("#to-txt");
+		let chkPost = $("#chk-post");
+		let isPost = $("#chk-post").is(":checked");
+		toTxt.val("");
+		
+		console.log("isPost: " + isPost);
+		
+		if (fromTxt.val() == "") {
+			return;
+		}
+		
+		let rows = $("#from-txt").val().split("\n");
+		let headerBegin = false;
+		let url = "";
+		let header = "";
+		let body = "";
+		$.each(rows, function(index, value) {
+			if (value.indexOf(TAG_CLIENT) == -1 && value.indexOf(TAG_SERVICE) == -1) {
+				return;
+			}
+				
+			if (value.indexOf(HEADER) > -1) {
+				url = getValue(rows[index-1]);
+				headerBegin = true;
+			} else if (value.indexOf(BODY) > -1) {
+				headerBegin = false;
+				body += getValue(rows[index+1]);
+				return false;
+			} else if (headerBegin) {
+				header += getValue(value);
+			}
+		});
+		
+		generateCurlCommand(header, body, url, toTxt, isPost);
+		copyToClipboard(toTxt);
+		showInfoPopup();
+	});
+});

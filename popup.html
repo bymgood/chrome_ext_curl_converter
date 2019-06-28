@@ -2,34 +2,63 @@
 <html>
   <head>
     <style>
-	  .body {
-		margin: 0;
-	  }
-	  
-	  textarea {
-		width: 100%;
-		height: 300px;
-	  }
-	  
-	  .column {
-		float: left;
-		width: 46%;
-		padding: 10px;
-	  }
-	  
-	  .column_btn {
-		float: left;
-		vertical-align: middle;
-		line-height: 320px;
-	  }
+		.body {
+			margin: 0;
+		}
 
-	  /* Clear floats after the columns */
-	  .row:after {
-	    content: "";
-		display: table;
-		clear: both;		
-		width: 800px;
-	  }
+		textarea {
+			width: 100%;
+			height: 300px;
+		}
+
+		.column {
+			float: left;
+			width: 46%;
+			padding: 10px;
+		}
+
+		.column_btn {
+			float: left;
+			vertical-align: middle;
+			line-height: 320px;
+		}
+
+		/* Clear floats after the columns */
+			.row:after {
+			content: "";
+			display: table;
+			clear: both;		
+			width: 800px;
+		}
+
+		.options {
+			margin-left: 10px;
+			padding: 5px;
+		}
+
+		.popup {
+			position: relative;
+			cursor: pointer;
+			-webkit-user-select: none;
+			-moz-user-select: none;
+			-ms-user-select: none;
+			user-select: none;
+		}
+
+		.popup .popuptext {
+			display: none;
+			width: 160px;
+			background-color: #555;
+			color: #fff;
+			text-align: center;
+			border-radius: 6px;
+			padding: 8px 0;
+			position: absolute;
+			z-index: 1;
+			bottom: 125%;
+			left: 50%;
+			margin-left: -80px;
+		}
     </style>
 	<link href="common.min.css" rel="stylesheet">
   </head>
@@ -45,11 +74,17 @@
 			<textarea id="to-txt"></textarea>
 		</div>
 	</div>
+	<div class="popup">
+		<span class="popuptext">cURL 복사 되었습니다.</span>
+	</div>
+	<div class="options">
+		POST <input type="checkbox" id="chk-post" />
+	</div>
 	<div id="usage-tip" style="display: block;">
-		Tip: 로그에서 "####  REQUEST URL  ###" ~ "###  REQUEST BODY  ###" 값 까지 복붙한 후 "→" 버튼을 누르세요.
+		Tip: Copy request log and press [→] button to convert to CURL command.
 	</div>
 	<div class="footer">
-      © <span id="year">2019</span> 클라이언트기술개발팀 - ym.baek
+      © <span id="year">2019</span> ONEStore. Client Dev Team - ym.baek
     </div>
 	<script src="jquery-3.4.1.min.js"></script>
     <script src="popup.js"></script>
