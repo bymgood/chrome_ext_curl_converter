@@ -1,9 +1,9 @@
 {
-	"name": "OSC Curl Command Extractor",
-	"version": "1.0",
-	"description": "Extract curl command",
+	"name": "CURL Command Converter for OSC",
+	"version": "0.0.0.1",
+	"description": "Extract curl command from OSC log",
 	"manifest_version": 2,
-	"permissions": ["activeTab", "clipboardRead", "clipboardWrite"],
+	"permissions": ["activeTab", "clipboardRead"],
 	"browser_action": {
 		"default_popup": "popup.html",
 		"default_icon": {
