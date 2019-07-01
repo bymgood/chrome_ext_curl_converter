@@ -45,7 +45,7 @@ function generateCurlCommand(header, body, url, toTxt, chkPost) {
 	
 	toTxt.val(curl);
 	
-	console.log("CURL command has been generated.");
+	// console.log("CURL command has been generated.");
 }
 
 function copyToClipboard(toTxt) {
@@ -55,7 +55,7 @@ function copyToClipboard(toTxt) {
 	document.execCommand("copy");
 	$temp.remove();
 	
-	console.log("CURL command has been copied to clipboard.");
+	// console.log("CURL command has been copied to clipboard.");
 }
 
 function showInfoPopup() {
@@ -76,7 +76,7 @@ $(function () {
 		let isPost = $("#chk-post").is(":checked");
 		toTxt.val("");
 		
-		console.log("isPost: " + isPost);
+		// console.log("isPost: " + isPost);
 		
 		if (fromTxt.val() == "") {
 			return;
