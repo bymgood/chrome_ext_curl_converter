@@ -1,16 +1,16 @@
 {
 	"name": "CURL Command Converter for OSC",
-	"version": "0.0.0.3",
+	"version": "0.0.0.5",
 	"description": "Extract curl command from OSC log",
 	"manifest_version": 2,
 	"permissions": ["activeTab", "clipboardRead"],
 	"browser_action": {
 		"default_popup": "popup.html",
 		"default_icon": {
-			"16": "images/icon.png",
-			"32": "images/icon.png",
-			"48": "images/icon.png",
-			"128": "images/icon.png"
+			"16": "images/icon_16.png",
+			"32": "images/icon_32.png",
+			"48": "images/icon_48.png",
+			"128": "images/icon_128.png"
 		}
 	}
 }
