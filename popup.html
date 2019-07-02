@@ -2,65 +2,7 @@
 <html>
   <head>
 	<meta charset="utf-8">
-    <style>
-		.body {
-			margin: 0;
-		}
-
-		textarea {
-			width: 100%;
-			height: 300px;
-		}
-
-		.column {
-			float: left;
-			width: 46%;
-			padding: 10px;
-		}
-
-		.column_btn {
-			float: left;
-			vertical-align: middle;
-			line-height: 320px;
-		}
-
-		/* Clear floats after the columns */
-		.row:after {
-			content: "";
-			display: table;
-			clear: both;		
-			width: 800px;
-		}
-
-		.options {
-			margin-left: 10px;
-			padding: 5px;
-		}
-
-		.popup {
-			position: relative;
-			cursor: pointer;
-			-webkit-user-select: none;
-			-moz-user-select: none;
-			-ms-user-select: none;
-			user-select: none;
-		}
-
-		.popup .popuptext {
-			display: none;
-			width: 160px;
-			background-color: #555;
-			color: #fff;
-			text-align: center;
-			border-radius: 6px;
-			padding: 8px 0;
-			position: absolute;
-			z-index: 1;
-			bottom: 125%;
-			left: 50%;
-			margin-left: -80px;
-		}
-    </style>
+	<link href="css/popup.min.css" rel="stylesheet">
 	<link href="css/common.min.css" rel="stylesheet">
   </head>
   <body>
@@ -79,7 +21,9 @@
 		<span class="popuptext">cURL 복사 되었습니다.</span>
 	</div>
 	<div class="options">
-		POST <input type="checkbox" id="chk-post" />
+		<input type="checkbox" id="chk-post" /> <label for="chk-post">POST</label> / 
+		<input type="checkbox" id="chk-to-file" /> <label for="chk-to-file">To FILE</label> / 
+		<input type="checkbox" id="chk-pretty-xml" /> <label for="chk-pretty-xml">xmllint</label>
 	</div>
 	<div id="usage-tip" style="display: block;">
 		Tip: Copy request log and press [→] button to convert to CURL command.

@@ -28,24 +28,61 @@ function parseHeader(header) {
 	return result;
 }
 
-function generateCurlCommand(header, body, url, toTxt, chkPost) {
+function generateCurlCommand(header, body, url, toTxt, isPost, isToFile, isPrettyXml) {
 	let curl = "";
-	curl += "curl -v --connect-timeout 5 --max-time 10 \\\n";
+	// curl += "curl -v --connect-timeout 5 --max-time 10 \\\n";
+	curl += "curl \\\n";
 	curl += parseHeader(header);
-	if (body != null && body != "") {
-		curl += "-d '" + body + "' \\\n";
-		if (chkPost) {
-			curl += url + "\n";
-		} else {
-			curl += "-X GET " + url + "\n";
-		}
+	if (isPost) {
+		curl += appendPostParam(url, body);
 	} else {
-		curl += url + "\n";
+		curl += appendGetParam(url, body);
+	}
+
+	if (isPrettyXml) {
+		curl += appendPrettyXml(isPrettyXml);
 	}
 	
+	curl += appendToFile(isToFile);
+	
+	curl += "\n"
 	toTxt.val(curl);
 	
 	// console.log("CURL command has been generated.");
+}
+
+function appendGetParam(url, body) {
+	let param = "";
+	if (body != "") {
+		param = "?" + body;
+	}
+	return "-X GET '" + url + param + "'";
+}
+
+function appendPostParam(url, body) {
+	let returnVal = "";
+	if (body != "") {
+		returnVal += "-d '" + body + "' \\\n";
+	}
+	returnVal += url;
+	
+	return returnVal;
+}
+
+function appendPrettyXml(isPrettyXml) {
+	if (isPrettyXml) {
+		return " | xmllint --format -";
+	} else {
+		return "";
+	}
+}
+
+function appendToFile(isToFile) {
+	if (isToFile) {
+		return " >> response.txt";
+	} else {
+		return "";
+	}
 }
 
 function copyToClipboard(toTxt) {
@@ -65,15 +102,14 @@ function showInfoPopup() {
 }
 
 $(function () {
-	$("#chk-post").change(function() {
+	$("#chk-post, #chk-to-file, #chk-pretty-xml").change(function() {
 		$("#curl-command-parsing").trigger("click");
 	});	
 	
 	$("#curl-command-parsing").click(function() {
 		let fromTxt = $("#from-txt");
 		let toTxt = $("#to-txt");
-		let chkPost = $("#chk-post");
-		let isPost = $("#chk-post").is(":checked");
+		let isPost = $("#chk-post").is(":checked"), isToFile = $("#chk-to-file").is(":checked"), isPrettyXml = $("#chk-pretty-xml").is(":checked");
 		toTxt.val("");
 		
 		// console.log("isPost: " + isPost);
@@ -91,7 +127,7 @@ $(function () {
 			if (value.indexOf(TAG_CLIENT) == -1 && value.indexOf(TAG_SERVICE) == -1) {
 				return;
 			}
-				
+			
 			if (value.indexOf(HEADER) > -1) {
 				url = getValue(rows[index-1]);
 				headerBegin = true;
@@ -104,7 +140,7 @@ $(function () {
 			}
 		});
 		
-		generateCurlCommand(header, body, url, toTxt, isPost);
+		generateCurlCommand(header, body, url, toTxt, isPost, isToFile, isPrettyXml);
 		copyToClipboard(toTxt);
 		showInfoPopup();
 	});
