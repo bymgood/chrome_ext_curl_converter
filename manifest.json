@@ -1,6 +1,6 @@
 {
 	"name": "CURL Command Converter for OSC",
-	"version": "0.0.0.8",
+	"version": "0.0.0.9",
 	"description": "Extract curl command from OSC log",
 	"permissions": ["activeTab", "clipboardRead"],
 	"browser_action": {
